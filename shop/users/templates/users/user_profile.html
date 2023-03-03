@@ -1,0 +1,41 @@
+{% extends 'products/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card">
+                {% if user.photo %}
+                <img src="{{ user.photo.url }}" class="card-img-top">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ user.username }}</h5>
+                    <p class="card-text">{{ user.email }}</p>
+                    <a href="{% url 'users:edit_profile' %} " class="btn btn-primary">Edit Profile</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            {% include 'products/cart.html' %}
+            <h3 class="mb-3">All Products</h3>
+            <div class="row">
+                {% for product in all_products %}
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        {% if product.image %}
+                        <img src="{{ product.image.url }}" class="card-img-top" width="200" height="200">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.name }}</h5>
+                            <p class="card-text">${{ product.price }}</p>
+                            <a href="{% url 'products:add_to_cart' product.id %}" class="btn btn-primary">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

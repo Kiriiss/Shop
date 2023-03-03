@@ -1,0 +1,81 @@
+{% extends 'products/base.html' %}
+{% load humanize %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5 class="card-title">Order №{{ object.id }}</h5>
+        </div>
+        <div class="card-body">
+          <table class="table">
+            <tbody>
+              <tr>
+                <th>First_name</th>
+                <td>{{ object.first_name }}</td>
+              </tr>
+              <tr>
+                <th>Email</th>
+                <td>{{ object.email }}</td>
+              </tr>
+              <tr>
+                <th>Address</th>
+                <td>{{ object.address }}</td>
+              </tr>
+              <tr>
+                <th>City</th>
+                <td>{{ object.city }}</td>
+              </tr>
+              <tr>
+                <th>Country</th>
+                <td>{{ object.country }}</td>
+              </tr>
+
+              <tr>
+                <th>Data of order</th>
+                <td>{{ object.created_at }}</td>
+              </tr>
+              <tr>
+                <th>Total sum of the order</th>
+                <td>{{ object.basket_history.total_cart_price|intcomma }}</td>
+              </tr>
+              <tr>
+                <th>Status</th>
+                <td>{{ object.status }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5 class="card-title">Заказанные товары</h5>
+        </div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Товар</th>
+                <th>Количество</th>
+                <th>Цена</th>
+                <th>Всего</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in object.basket_history.purchased_items %}
+              <tr>
+                <td>{{ item.product_name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.price|intcomma }}</td>
+                <td>{{ item.sum|intcomma }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

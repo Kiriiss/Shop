@@ -1,0 +1,64 @@
+{% if baskets %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="text-center">Cart</h1>
+            <div class="text-right">
+                <h4>Total price: {{ baskets.total_cart_price }} $</h4>
+            </div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Photo</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Description</th>
+                    <th>Total</th>
+                    <th>Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for cart_item in baskets %}
+                <tr>
+                    <td>
+                        {% if cart_item.product.photo %}
+                        <img src="{{ cart_item.product.photo.url }}" alt="{{ cart_item.product.name }}" width="100">
+                        {% else %}
+                        <p>No photos</p>
+                        {% endif %}
+                    </td>
+                    <td>{{ cart_item.product.name }}</td>
+                    <td>{{ cart_item.product.price }} $</td>
+                    <td>{{ cart_item.quantity }}</td>
+                    <td>{{ cart_item.product.description }}</td>
+                    <td>{{ cart_item.total_item_price }} $</td>
+                    <td>
+                        <a href="{% url 'users:delete_from_cart' cart_item.id %}" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Total</h3>
+                        <p>Number of items: {{ baskets.total_quantity }}</p>
+                        <p>Total price: {{ baskets.total_cart_price }} $</p>
+
+                        <a href="{% url 'orders:order_create' %}" class="btn btn-primary btn-block">Place Order</a>
+
+
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="alert alert-info">
+                <p>Cart is empty</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}

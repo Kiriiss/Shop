@@ -1,0 +1,26 @@
+{% extends 'products/base.html' %}
+
+{% block content %}
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body text-center">
+          {% if product.image %}
+          <img src="{{ product.image.url }}" class="img-fluid mb-3 rounded" alt="{{ product.name }}" width="200" height="300">
+          {% endif %}
+          <h2 class="mb-3">{{ product.name }}</h2>
+          <p class="lead mb-3">{{ product.description }}</p>
+          <p class="h4 text-danger font-weight-bold mb-3">Price: {{ product.price }}</p>
+          <form action="{% url 'products:add_to_cart' product.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-shopping-cart mr-2"></i>Add to Cart
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

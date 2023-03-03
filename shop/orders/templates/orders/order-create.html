@@ -1,0 +1,55 @@
+{% extends 'products/base.html' %}
+
+{% block content %}
+<div class="container">
+  <h1>Creating Order</h1>
+  <form action="{% url 'orders:order_create' %}" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="{{ form.first_name.id_for_label }}">Name</label>
+      {{ form.first_name }}
+    </div>
+    <div class="form-group">
+      <label for="{{ form.last_name.id_for_label }}">Last_name</label>
+      {{ form.last_name }}
+    </div>
+    <div class="form-group">
+      <label for="{{ form.email.id_for_label }}">Email</label>
+      {{ form.email }}
+    </div>
+    <div class="form-group">
+      <label for="{{ form.address.id_for_label }}">Address</label>
+      {{ form.address }}
+    </div>
+    <hr>
+    <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              {% for basket in baskets %}
+                <tr>
+                  <td>{{ basket.product.name }}</td>
+                  <td>{{ basket.quantity }}</td>
+                  <td>{{ basket.total_item_price }}</td>
+                </tr>
+              {% endfor %}
+
+            </tbody>
+          </table>
+          <hr>
+          <div class="form-group">
+              <span>Total sum</span>
+            <strong>{{ baskets.total_cart_price }} $</strong>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit Order</button>
+        </form>
+      </div>
+
+
+{% endblock %}
